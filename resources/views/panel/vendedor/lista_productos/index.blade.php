@@ -17,7 +17,6 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 mb-3">
-            
             <a href="{{ route('producto.create') }}" class="btn btn-success text-uppercase">
                 Nuevo Producto
             </a>
@@ -32,51 +31,52 @@
             </div>
         @endif
 
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <table id="tabla-productos" class="table table-striped table-hover w-100">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col" class="text-uppercase">Categoría</th>
-                            <th scope="col" class="text-uppercase">Nombre</th>
-                            <th scope="col" class="text-uppercase">Descripción</th>
-                            <th scope="col" class="text-uppercase">Imagen</th>
-                            <th scope="col" class="text-uppercase">Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($productos as $producto)
-                        <tr>
-                            <td>{{ $producto->id }}</td>
-                            <td>{{ $producto->categoria->nombre }}</td>
-                            <td>{{ $producto->nombre }}</td>
-                            <td>{{ Str::limit($producto->descripcion, 80) }}</td>
-                            <td>
-                                <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}" class="img-fluid" style="width: 150px;">
-                            </td>
-                            <td>
-                                <div class="d-flex">
-                                    <a href="{{ route('producto.show', $producto) }}" class="btn btn-sm btn-info text-white text-uppercase me-1">
-                                        Ver
-                                    </a>
-                                    <a href="{{ route('producto.edit', $producto) }}" class="btn btn-sm btn-warning text-white text-uppercase me-1">
-                                        Editar
-                                    </a>
-                                    <form action="{{ route('producto.destroy', $producto) }}" method="POST">
-                                        @csrf 
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger text-uppercase">
-                                            Eliminar
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table id="tabla-productos" class="table table-striped table-hover w-100">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" class="text-uppercase">Categoría</th>
+                                <th scope="col" class="text-uppercase">Nombre</th>
+                                <th scope="col" class="text-uppercase">Descripción</th>
+                                <th scope="col" class="text-uppercase">Imagen</th>
+                                <th scope="col" class="text-uppercase">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($productos as $producto)
+                            <tr>
+                                <td>{{ $producto->id }}</td>
+                                <td>{{ $producto->categoria->nombre }}</td>
+                                <td>{{ $producto->nombre }}</td>
+                                <td>{{ Str::limit($producto->descripcion, 80) }}</td>
+                                <td>
+                                    <img src="{{ $producto->imagen }}" alt="{{ $producto->nombre }}" class="img-fluid" style="width: 150px;">
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a href="{{ route('producto.show', $producto) }}" class="btn btn-sm btn-info text-white text-uppercase me-1">
+                                            Ver
+                                        </a>
+                                        <a href="{{ route('producto.edit', $producto) }}" class="btn btn-sm btn-warning text-white text-uppercase me-1">
+                                            Editar
+                                        </a>
+                                        <form action="{{ route('producto.destroy', $producto) }}" method="POST">
+                                            @csrf 
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger text-uppercase">
+                                                Eliminar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -85,13 +85,30 @@
 
 {{-- Importacion de Archivos CSS --}}
 @section('css')
-    
-@stop
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
+    <!-- DataTables Responsive CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+@stop
 
 {{-- Importacion de Archivos JS --}}
 @section('js')
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
-    {{-- La funcion asset() es una funcion de Laravel PHP que nos dirige a la carpeta "public" --}}
+    <!-- DataTables Responsive JS -->
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+
+    <!-- Inicializa el DataTables y el DataTables Responsive -->
+    <script>
+        $(document).ready(function() {
+            $('#tabla-productos').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+
+    {{-- Incluye tu archivo JavaScript personalizado --}}
     <script src="{{ asset('js/productos.js') }}"></script>
 @stop

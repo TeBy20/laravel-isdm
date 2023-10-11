@@ -10,6 +10,15 @@ class ProductoController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     public function __construct()
+     {
+        //  $this->middleware('can:admin.productos.index')->only('index');
+         $this->middleware('can:lista_productos')->only('index');
+     }
+    
+    
+
     public function index()
     {
         $productos = Producto::where('vendedor_id', auth()->user()->id) // Filtra los productos del VENDEDOR LOGUEADO
