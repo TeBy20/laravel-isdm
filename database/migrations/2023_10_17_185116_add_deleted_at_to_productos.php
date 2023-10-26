@@ -12,9 +12,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('productos', function (Blueprint $table) {
-            $table->softDeletes(); // Esto agrega el campo 'deleted_at'
+            $table->softDeletes();
         });
     }
+
 
     public function down()
     {
